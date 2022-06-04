@@ -1,0 +1,239 @@
+{
+   "layout": {
+      "pages": [
+         {
+            "id": "phpIPAM",
+            "title": "phpIPAM integration package for vRA 8",
+            "sections": [
+               {
+                  "id": "section_1",
+                  "fields": [
+                     {
+                        "id": "authType",
+                        "display": "radio"
+                     },
+                     {
+                        "id": "appId",
+                        "display": "textField"
+                     },
+                     {
+                        "id": "privateKeyId",
+                        "display": "textField",
+                        "state": {
+                           "visible": [
+                              {
+                                 "equals": {
+                                    "authType": "user"
+                                 },
+                                 "value": true
+                              }
+                           ]
+                        }
+                     },
+                     {
+                        "id": "privateKey",
+                        "display": "passwordField"
+                     },
+                     {
+                        "id": "hostName",
+                        "display": "textField"
+                     },
+                     {
+                        "id": "enableFilter",
+                        "display": "checkbox"
+                     },
+                     {
+                        "id": "filterField",
+                        "display": "textField",
+                        "state": {
+                           "visible": [
+                              {
+                                 "equals": {
+                                    "enableFilter": true
+                                 },
+                                 "value": true
+                              }
+                           ]
+                        }
+                     },
+                     {
+                        "id": "filterValue",
+                        "display": "textField",
+                        "state": {
+                           "visible": [
+                              {
+                                 "equals": {
+                                    "enableFilter": true
+                                 },
+                                 "value": true
+                              }
+                           ]
+                        }
+                     },
+                     {
+                        "id": "properties",
+                        "display": "datagrid",
+                        "state": {
+                           "visible": true,
+                           "read-only": false,
+                           "hidden-fields": []
+                        }
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   },
+   "schema": {
+      "authType": {
+         "type": {
+            "dataType": "string"
+         },
+         "label": "Authentication",
+         "valueList": [
+            {
+               "label": "User token",
+               "value": "user"
+            },
+            {
+               "label": "App code token",
+               "value": "token"
+            }
+         ],
+         "default": "token",
+         "constraints": {
+            "required": true
+         }
+      },
+      "appId": {
+         "type": {
+            "dataType": "string"
+         },
+         "label": "API App ID",
+         "constraints": {
+            "required": true
+         },
+         "default": "vra"
+      },
+      "privateKeyId": {
+         "type": {
+            "dataType": "string"
+         },
+         "label": "Username",
+         "default": "admin",
+         "constraints": {
+            "required": true
+         }
+      },
+      "privateKey": {
+         "label": "Password / App code",
+         "type": {
+            "dataType": "secureString"
+         },
+         "constraints": {
+            "required": true
+         }
+      },
+      "hostName": {
+         "type": {
+            "dataType": "string"
+         },
+         "label": "Hostname",
+         "constraints": {
+            "required": true
+         }
+      },
+      "enableFilter": {
+         "type": {
+            "dataType": "boolean"
+         },
+         "label": "Enable subnet filtering",
+         "signpost": "Extract only subnets that match the assigned filter",
+         "default": true
+      },
+      "filterField": {
+         "type": {
+            "dataType": "string"
+         },
+         "label": "Filter field",
+         "constraints": {
+            "required": [
+               {
+                  "equals": {
+                     "enableFilter": true
+                  },
+                  "value": true
+               }
+            ]
+         },
+         "default": "custom_vRA"
+      },
+      "filterValue": {
+         "type": {
+            "dataType": "string"
+         },
+         "label": "Filter value",
+         "constraints": {
+            "required": [
+               {
+                  "equals": {
+                     "enableFilter": true
+                  },
+                  "value": true
+               }
+            ]
+         },
+         "default": "1"
+      },
+      "properties": {
+         "type": {
+            "dataType": "complex",
+            "isMultiple": true,
+            "fields": [
+               {
+                  "label": "Field",
+                  "id": "prop_key",
+                  "type": {
+                     "dataType": "string"
+                  },
+                  "constraints": {}
+               },
+               {
+                  "label": "Value",
+                  "id": "prop_value",
+                  "type": {
+                     "dataType": "string"
+                  },
+                  "constraints": {}
+               }
+            ]
+         },
+         "placeholder": "",
+         "default": [
+            {
+               "prop_key": "ignoreSslWarning",
+               "prop_value": "true"
+            },
+            {
+               "prop_key": "dnsDomain",
+               "prop_value": "raiffeisen.ru"
+            },
+            {
+               "prop_key": "pingAllocatedAddress",
+               "prop_value": "true"
+            },
+            {
+               "prop_key": "checkAddressPtr",
+               "prop_value": "true"
+            }
+         ],
+         "constraints": {}
+      }
+   },
+   "options": {
+      "type": {
+         "dataType": "string"
+      }
+   }
+}
